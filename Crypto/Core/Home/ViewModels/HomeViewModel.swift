@@ -18,7 +18,7 @@ class HomeViewModel: ObservableObject {
     @Published var allCoins: [CoinModel] = []
     // second tab
     @Published var portfolioCoins: [CoinModel] = []
-    
+    @Published var isLoading = false
     @Published var searchText: String = ""
     
     private let coinDataService = CoinDataService()
@@ -39,7 +39,7 @@ class HomeViewModel: ObservableObject {
         $searchText
             .combineLatest(coinDataService.$allCoins) // when the allcoins get published, the map + sink is going to run
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main) // will wait 0.5 seconds before running the rest of the code, so the function won't get executed all the time
-            .map(filteredCoins)
+            .map(filteredCoins) // filter the coins
             .sink { [weak self] (returnedCoins) in
                 self?.allCoins = returnedCoins
             }
@@ -50,15 +50,7 @@ class HomeViewModel: ObservableObject {
         // therefore we want to subscribe to allcoins and portfoliocoins
         $allCoins // take latest array of filtered coins of type coin model
             .combineLatest(portfolioDataService.$savedEntities) // type portfolio entity, save the coins in core data
-            .map { (coinmodels, portfolioEntities) -> [CoinModel] in
-                coinmodels
-                    .compactMap { (coin) -> CoinModel? in
-                        guard let entity = portfolioEntities.first(where: { $0.coinId == coin.id }) else {
-                            return nil // this means we dont have this coin in our portfolio
-                        }
-                        return coin.updateHoldings(amount: entity.amount) //it will take the current coin and return the coin with the same values except for the holdings with a new amount
-                    } // the result is optional, because a bunch of coins we dont need to use, only the ones we have in our portfolio
-            }
+            .map(mapAllCoinsToPortfolioCoins) // you get the parameters from the subscribers so no need to pass them explictly here
             .sink { [weak self] (returnedCoins) in
                 self?.portfolioCoins = returnedCoins
             }
@@ -71,12 +63,30 @@ class HomeViewModel: ObservableObject {
             .map(mapMarketData)
             .sink { [weak self] (returnedStats) in
                 self?.statistics = returnedStats
+                self?.isLoading = false
             }
             .store(in: &cancellables)
     }
     
     func updatePortfolio(coin: CoinModel, amount: Double) {
         portfolioDataService.updatePortfolio(coin: coin, amount: amount)
+    }
+    
+    func reloadData() {
+        isLoading = true
+        coinDataService.getCoins()
+        marketDataService.getMarketData()
+        HapticManager.notification(type: .success)
+    }
+    
+    private func mapAllCoinsToPortfolioCoins(allCoins: [CoinModel], portfolioEntities: [PortfolioEntity]) -> [CoinModel] {
+        allCoins
+            .compactMap { (coin) -> CoinModel? in
+                guard let entity = portfolioEntities.first(where: { $0.coinId == coin.id }) else {
+                    return nil // this means we dont have this coin in our portfolio
+                }
+                return coin.updateHoldings(amount: entity.amount) //it will take the current coin and return the coin with the same values except for the holdings with a new amount
+            } // the result is optional, because a bunch of coins we dont need to use, only the ones we have in our portfolio
     }
     
     private func mapMarketData(marketDataModel: MarketDataModel?, portfolioCoins: [CoinModel]) -> [StatisticModel] {
@@ -99,7 +109,7 @@ class HomeViewModel: ObservableObject {
             portfolioCoins
             .map { (coin) -> Double in
                 let currentValue = coin.currentHoldingsValue
-                let percentChange = coin.priceChangePercentage24H ?? 0 / 100
+                let percentChange = (coin.priceChangePercentage24H ?? 0) / 100
                 let previousValue = currentValue / (1 + percentChange)
                 return previousValue
             }

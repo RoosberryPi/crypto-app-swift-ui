@@ -27,6 +27,7 @@
 		985A8E0D2A2C71EB006F8993 /* CoinImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A8E0C2A2C71EB006F8993 /* CoinImageView.swift */; };
 		985A8E0F2A2C74BF006F8993 /* CoinImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A8E0E2A2C74BF006F8993 /* CoinImageService.swift */; };
 		985A8E112A2C7732006F8993 /* CoinImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A8E102A2C7732006F8993 /* CoinImageViewModel.swift */; };
+		986BA58A2A4F08F0007613BA /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BA5892A4F08F0007613BA /* HapticManager.swift */; };
 		989E39262A34872500A120C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 989E39252A34872500A120C2 /* Assets.xcassets */; };
 		989E39282A3488D100A120C2 /* MarketDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989E39272A3488D100A120C2 /* MarketDataModel.swift */; };
 		989E392A2A348C0100A120C2 /* MarketDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989E39292A348C0100A120C2 /* MarketDataService.swift */; };
@@ -62,6 +63,7 @@
 		985A8E0C2A2C71EB006F8993 /* CoinImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageView.swift; sourceTree = "<group>"; };
 		985A8E0E2A2C74BF006F8993 /* CoinImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageService.swift; sourceTree = "<group>"; };
 		985A8E102A2C7732006F8993 /* CoinImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinImageViewModel.swift; sourceTree = "<group>"; };
+		986BA5892A4F08F0007613BA /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		989E39252A34872500A120C2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		989E39272A3488D100A120C2 /* MarketDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataModel.swift; sourceTree = "<group>"; };
 		989E39292A348C0100A120C2 /* MarketDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataService.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				985A8E092A2BBF92006F8993 /* NetworkingManager.swift */,
 				98EB44CE2A2DF6B7008E6612 /* LocalFileManager.swift */,
+				986BA5892A4F08F0007613BA /* HapticManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				98EB44D32A2F7FB6008E6612 /* UIApplication.swift in Sources */,
 				9845C8512A1B6E4000A38B71 /* CircleButtonView.swift in Sources */,
 				982110242A1B689E00F4D007 /* Color.swift in Sources */,
+				986BA58A2A4F08F0007613BA /* HapticManager.swift in Sources */,
 				98EB44D12A2F77FB008E6612 /* SearchBarView.swift in Sources */,
 				985A8E0A2A2BBF92006F8993 /* NetworkingManager.swift in Sources */,
 				98070CE92A38965A00C21C98 /* CoinLogoView.swift in Sources */,

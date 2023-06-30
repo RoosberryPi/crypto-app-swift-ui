@@ -20,7 +20,7 @@ class MarketDataService {
     }
     
     // get url, get the data, check for valid response, decode the good data in market data models, print errors, append returned coins to coin array
-    private func getMarketData() {
+    func getMarketData() {
         guard let url = URL(string: "https://api.coingecko.com/api/v3/global") else { return
         }
 
